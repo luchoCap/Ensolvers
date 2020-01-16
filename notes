@@ -1,0 +1,14 @@
+instalar nodejs
+instalar mongodb
+
+npm init --y
+npm install express
+npm install nodemon -D
+npm install morgan
+npm install mongoose
+npm i webpack -D
+npm i webpack-cli//para que funcione internamente
+npm install react react-dom -D// lo instalo como dependencia de desarrollo ya que despues el codigo despues sera tranformado
+npm install babel-core babel-loader babel-preset-react babel-preset-env -D
+
+Utilizo materialize y Icons
