@@ -4,12 +4,14 @@ const router = express.Router();
 const Task = require('../models/task')
 const Folder = require('../models/folders')
 
+//ruta de obtencion de folders
 router.get('/api/folders', async (req, res) => {
     const folders = await Folder.find()
     console.log(folders)
     res.send(folders)
 })
 
+//ruta para agregar folders
 router.post('/api/folders', async (req, res) => {
     const { title } = req.body;
     const folders = new Folder({ title });
@@ -17,6 +19,7 @@ router.post('/api/folders', async (req, res) => {
     res.json({ status: 'Carpeta guardada' })
 })
 
+//ruta para eliminar folders y sus comentarios
 router.delete('/api/folders/:id', async (req, res) => {
     const folder = await Folder.findOne({ _id: req.params.id })
     if (folder) {
@@ -27,6 +30,7 @@ router.delete('/api/folders/:id', async (req, res) => {
     res.json({ status: 'Carpeta Eliminada' })
 })
 
+//ruta para cargar una tarea a un folder
 router.post('/api/tasks/:id', async (req, res) => {
 
     const folder = await Folder.findOne({ _id: req.params.id })
@@ -44,13 +48,15 @@ router.post('/api/tasks/:id', async (req, res) => {
 
 })
 
-
+//ruta para traer todas las tareas pertenecientes a un folder
 router.get('/api/tasks/:id', async (req, res) => {
     const tasks = await Task.find({ folder_id: req.params.id });
     console.log(tasks)
     res.send(tasks)
 });
 
+
+//ruta para traer las tareas a modificar
 router.get('/api/tasks/edit/:id', async (req, res) => {
     const tasks = await Task.findById(req.params.id);
     console.log(tasks)
@@ -58,7 +64,7 @@ router.get('/api/tasks/edit/:id', async (req, res) => {
 });
 
 
-
+//ruta para actualizar la tarea
 router.put('/api/tasks/:id', async (req, res) => {
     const { title, description } = req.body
     const newTask = { title, description };
@@ -67,7 +73,7 @@ router.put('/api/tasks/:id', async (req, res) => {
 
 })
 
-
+//ruta para eliminar una tarea
 router.delete('/api/tasks/:id', async (req, res) => {
     await Task.findByIdAndDelete(req.params.id);
     res.json({ status: 'Tarea eliminada' })

@@ -29,7 +29,7 @@ class EditWork extends Component {
         this.fetchTasks()
     }
 
-
+    //cambia el estado del checkbox
     handleChangeCheck(id) {
         if (this.state.visible == "") {
             this.handleVisible()
@@ -101,6 +101,7 @@ class EditWork extends Component {
 
     }
 
+    //cambia el valor del campo que corresponda y actualiza el state
     handleChange(e) {
         const { name, value } = e.target
         this.setState({
@@ -109,6 +110,7 @@ class EditWork extends Component {
 
     }
 
+    //muestra o no el bloque para poder editar
     handleVisible() {
         if (this.state.visible === 'none') {
             console.log(this.state.visible)
@@ -123,6 +125,7 @@ class EditWork extends Component {
         }
     }
 
+    //cambia el estado para mostrar el componente App o el componente EditWork
     handleEstado() {
 
         this.props.cambiarEstado();
@@ -131,7 +134,7 @@ class EditWork extends Component {
 
 
 
-
+    //agrego la tarea o la modifico
     addTask(event) {
         console.log(this.props.folder)
         if (this.state._id) {
@@ -168,12 +171,13 @@ class EditWork extends Component {
                 })
                 .catch(err => console.error(err))
         }
-
+        document.getElementById("miForm").reset();
         event.preventDefault();
+
     }
 
 
-
+    //traigo todas las tareas
     fetchTasks() {
         fetch(`/api/tasks/${this.props.folder}`)
             .then(res => res.json())
@@ -183,7 +187,7 @@ class EditWork extends Component {
             })
     }
 
-
+    //borro la tarea correspondiente
     deleteTask(id) {
         if (confirm('Are you sure you want to delete it?')) {
             fetch(`/api/tasks/${id}`, {
@@ -202,6 +206,7 @@ class EditWork extends Component {
         }
     }
 
+    //actualizo el state que me servira para despues editar
     editTask(id) {
         fetch(`/api/tasks/edit/${id}`)
             .then(res => res.json())
@@ -219,6 +224,7 @@ class EditWork extends Component {
     render() {
         return (
             <div>
+                {/* navigate */}
                 <nav className="light-blue darken-4">
                     <div className="container">
                         <a className="brand-log" href="/">Ensolvers</a>
@@ -230,11 +236,9 @@ class EditWork extends Component {
                             <div className="card" >
                                 <div className="card-content">
                                     <table>
-
                                         <thead>
                                             <tr>
                                                 <th><button className="btn light-blue darken-4" onClick={this.handleEstado}>Folder > work </button> </th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -242,29 +246,25 @@ class EditWork extends Component {
                                                 this.state.tasks.map(task => {
                                                     return (
                                                         <tr key={task._id}>
-
-                                                            <td> <form action="#">
-
-                                                                <label><input type="checkbox" id="check" onChange={() => this.handleChangeCheck(task._id)} checked={task.description}></input>
-                                                                    <span htmlFor="check">  {task.title}</span></label>
-
-
-
-
-                                                            </form></td>
+                                                            <td>
+                                                                <form action="#">
+                                                                    <label><input type="checkbox" id="check" onChange={() => this.handleChangeCheck(task._id)} checked={task.description}></input>
+                                                                        <span htmlFor="check" style={{ fontSize: '1.2em', color: 'black' }}>  {task.title}</span>
+                                                                    </label>
+                                                                </form>
+                                                            </td>
                                                             <td>
                                                                 <button className="btn light-blue darken-4" onClick={() => this.deleteTask(task._id)}><i className="material-icons">delete</i></button>
                                                                 <button className="btn light-blue darken-4" style={{ margin: '4px' }} onClick={() => { this.editTask(task._id); this.handleVisible() }}> <i className="material-icons">edit</i></button>
                                                             </td>
-
                                                         </tr>
                                                     )
                                                 })
                                             }
-
                                         </tbody>
                                     </table>
-                                    <form onSubmit={this.addTask}>
+
+                                    <form onSubmit={this.addTask} id="miForm" style={{ marginTop: '1em' }}>
                                         <div className="row">
                                             <div className="input-field col s12">
                                                 <input name="title" type="text" placeholder="Add Task" onChange={this.handleChange} style={{ display: 'inline', width: 'auto' }} ></input>
@@ -293,23 +293,13 @@ class EditWork extends Component {
                                         <button type="button" className="btn light-blue darken-4" onClick={() => this.handleVisible()} style={{ margin: '4px' }}>Cancel</button>
                                     </form>
                                 </div>
-
-
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-
-
-
-
-
             </div>
-
-
         )
-
     }
 }
 

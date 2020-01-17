@@ -26,8 +26,8 @@ class App extends Component {
         this.fetchFolders()
     }
 
+    //muestra el componente App o EditWork segun taskvisible, y si muestra EditWork actualizo el state
     cambiarEstado(data) {
-
         if (data) {
             this.setState({
                 title: data.title,
@@ -43,6 +43,7 @@ class App extends Component {
 
     }
 
+    //trae todas las carpetas
     fetchFolders() {
         fetch('/api/folders')
             .then(res => res.json())
@@ -52,6 +53,7 @@ class App extends Component {
             })
     }
 
+    //va cambiando el valor del state segun corresponda
     handleChange(e) {
         const { name, value } = e.target
         this.setState({
@@ -59,8 +61,8 @@ class App extends Component {
         })
     }
 
+    //agrega las carpetas
     addTask(e) {
-
         fetch('api/folders', {
             method: 'POST',
             body: JSON.stringify(this.state),
@@ -79,8 +81,11 @@ class App extends Component {
             .catch(err => console.error(err))
 
         e.preventDefault();
+
+        document.getElementById("miForm").reset();
     }
 
+    //borra las carpetas
     deleteFolder(id) {
         if (confirm('Are you sure you want to delete it?')) {
             fetch(`/api/folders/${id}`, {
@@ -103,7 +108,10 @@ class App extends Component {
 
     render() {
         return (
+            // muestra componente App si cumple la condicion 
             !this.state.taskvisible ? <div>
+
+                {/* navigate */}
                 <nav className="light-blue darken-4">
                     <div className="container">
                         <a className="brand-log" href="/">Ensolvers</a>
@@ -111,20 +119,19 @@ class App extends Component {
                 </nav>
 
                 <div className="container">
-
                     <div className="row">
 
                         <div className="col s7" style={{ display: this.state.appvisible }}  >
                             <div className="card">
                                 <div className="card-content">
                                     <table>
-
                                         <thead>
                                             <tr>
-                                                <th>Folders</th>
-
+                                                <th style={{ fontSize: '1.5em' }}>Folders</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
+                                        {/* en la tabla traigo y enlisto todas las carpetas */}
                                         <tbody>
                                             {
                                                 this.state.folders.map(folder => {
@@ -133,12 +140,12 @@ class App extends Component {
 
                                                             <td> <form action="#">
 
-                                                                <label>  {folder.title}</label>
+                                                                <label style={{ fontSize: '1.2em', color: 'black' }}> - {folder.title}</label>
 
                                                             </form></td>
                                                             <td>
-                                                                <button className="btn light-blue darken-4" ><i className="material-icons" onClick={() => this.deleteFolder(folder._id)} > Delete</i></button>
-                                                                <button className="btn light-blue darken-4" style={{ margin: '4px' }} onClick={() => this.cambiarEstado(folder)} > <i className="material-icons">View Items</i></button>
+                                                                <button className="btn light-blue darken-4" onClick={() => this.deleteFolder(folder._id)}>  Delete</button>
+                                                                <button className="btn light-blue darken-4" style={{ margin: '4px' }} onClick={() => this.cambiarEstado(folder)} > View Items</button>
                                                             </td>
 
                                                         </tr>
@@ -150,10 +157,11 @@ class App extends Component {
                                             </div>
                                         </tbody>
                                     </table>
-                                    <form onSubmit={this.addTask}>
+                                    {/* el formulario con el cual se agregaran las carpetas */}
+                                    <form onSubmit={this.addTask} style={{ marginTop: '1em' }} id="miForm">
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <input name="title" type="text" placeholder="Add Task" onChange={this.handleChange} style={{ display: 'inline', width: 'auto' }} ></input>
+                                                <input name="title" type="text" placeholder="Add Folder" onChange={this.handleChange} style={{ display: 'inline', width: 'auto' }} ></input>
                                                 <button type="submit" className="btn light-blue darken-4" style={{ display: 'inline', marginLeft: '40px' }}>Send</button>
                                             </div>
                                         </div>
@@ -168,6 +176,7 @@ class App extends Component {
                 </div>
 
             </div> :
+                // muestra componente EditWork si cumple la condicion 
                 <div>
 
                     <EditWork folder={this.state._id} cambiarEstado={this.cambiarEstado} />
