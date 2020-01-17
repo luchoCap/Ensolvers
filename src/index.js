@@ -4,10 +4,10 @@ const path = require('path')
 const app = express();
 
 
-const { mongoose} = require('./database')
+const { mongoose } = require('./database')
 
 //settings
-app.set('port',process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3000);
 
 
 //Middlewares
@@ -16,7 +16,7 @@ app.use(express.json());//verifica si lo que recibe del servidor es en formato j
 
 
 //Routes
-app.use('/api/tasks',require('./routes/task.routes')); 
+app.use(require('./routes/task.routes'));
 
 //Static FIles
 app.use(express.static(path.join(__dirname, 'public')))
