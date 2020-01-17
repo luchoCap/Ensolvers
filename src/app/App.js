@@ -111,17 +111,18 @@ class App extends Component {
             // muestra componente App si cumple la condicion 
             !this.state.taskvisible ? <div>
 
-                {/* navigate */}
-                <nav className="light-blue darken-4">
-                    <div className="container">
-                        <a className="brand-log" href="/">Ensolvers</a>
-                    </div>
-                </nav>
+
 
                 <div className="container">
+                    {/* navigate */}
+                    <nav className="light-blue darken-4">
+                        <div className="container">
+                            <p className="brand-log" style={{ fontSize: '2em' }}>Ensolvers</p>
+                        </div>
+                    </nav>
                     <div className="row">
 
-                        <div className="col s7" style={{ display: this.state.appvisible }}  >
+                        <div className="s12 m12 l7" style={{ display: this.state.appvisible }}  >
                             <div className="card">
                                 <div className="card-content">
                                     <table>

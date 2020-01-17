@@ -33,7 +33,7 @@ Por si se tiene conflictos en la instalacion de dependencias se hicieron las sig
 
 npm install express
 npm install nodemon -D
-npm install morgan
+npm install morgan 
 npm install mongoose
 npm i webpack -D
 npm i webpack-cli

@@ -224,15 +224,16 @@ class EditWork extends Component {
     render() {
         return (
             <div>
-                {/* navigate */}
-                <nav className="light-blue darken-4">
-                    <div className="container">
-                        <a className="brand-log" href="/">Ensolvers</a>
-                    </div>
-                </nav>
+
                 <div className="container">
+                    {/* navigate */}
+                    <nav className="light-blue darken-4">
+                        <div className="container">
+                            <p className="brand-log" style={{ fontSize: '2em' }}>Ensolvers</p>
+                        </div>
+                    </nav>
                     <div className="row">
-                        <div className="col s7" >
+                        <div className="col s12 m12 l7" >
                             <div className="card" >
                                 <div className="card-content">
                                     <table>
@@ -277,7 +278,7 @@ class EditWork extends Component {
                             </div>
 
                         </div>
-                        <div className="col s5">
+                        <div className="col s12 m12 l5">
                             <div className="card" style={{ display: this.state.visible }}>
                                 <div className="card-content">
                                     <form onSubmit={this.addTask}>
