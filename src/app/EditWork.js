@@ -219,6 +219,11 @@ class EditWork extends Component {
     render() {
         return (
             <div>
+                <nav className="light-blue darken-4">
+                    <div className="container">
+                        <a className="brand-log" href="/">Ensolvers</a>
+                    </div>
+                </nav>
                 <div className="container">
                     <div className="row">
                         <div className="col s7" >

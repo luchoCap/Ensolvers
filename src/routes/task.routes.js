@@ -45,9 +45,6 @@ router.post('/api/tasks/:id', async (req, res) => {
 })
 
 
-
-
-
 router.get('/api/tasks/:id', async (req, res) => {
     const tasks = await Task.find({ folder_id: req.params.id });
     console.log(tasks)
@@ -60,14 +57,6 @@ router.get('/api/tasks/edit/:id', async (req, res) => {
     res.send(tasks)
 });
 
-
-
-// router.post('/api/tasks', async (req, res) => {
-//     const { title, description } = req.body;
-//     const task = new Task({ title, description });
-//     await task.save();
-//     res.json({ status: 'Tarea guardada' })
-// })
 
 
 router.put('/api/tasks/:id', async (req, res) => {

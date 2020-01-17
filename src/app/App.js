@@ -104,10 +104,9 @@ class App extends Component {
     render() {
         return (
             !this.state.taskvisible ? <div>
-                {/* Navigation */}
                 <nav className="light-blue darken-4">
                     <div className="container">
-                        <a className="brand-log" href="/">Mern Stack</a>
+                        <a className="brand-log" href="/">Ensolvers</a>
                     </div>
                 </nav>
 
@@ -170,6 +169,7 @@ class App extends Component {
 
             </div> :
                 <div>
+
                     <EditWork folder={this.state._id} cambiarEstado={this.cambiarEstado} />
                 </div>
 
