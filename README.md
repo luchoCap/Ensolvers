@@ -10,11 +10,14 @@ NodeJS version 12.3.1
 Para arrancar el proyecto se tiene que ejecutar el bash init.sh:
 ./init.sh
 
+Para ingresar desde el navegador hay que acceder a: localhost:3000/#/home
+
 Las dependencias usadas fueron:
 
     "express": "^4.17.1",
     "mongoose": "^5.8.3",
     "morgan": "^1.9.1",
+    "react-router-dom": "^5.1.2",
     "webpack-cli": "^3.3.10"
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
