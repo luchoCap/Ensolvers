@@ -217,6 +217,7 @@ class EditWork extends Component {
                     console.log(data)
                     M.toast({ html: 'Task deleted' })
                     this.fetchTasks()
+                    this.handleVisibleSend()
                 })
         }
     }

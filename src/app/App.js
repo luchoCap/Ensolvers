@@ -30,7 +30,6 @@ class App extends Component {
     cambiarEstado(data) {
         if (data) {
             this.setState({
-                title: data.title,
                 taskvisible: !this.state.taskvisible,
                 _id: data._id
             }, () => console.log(this.state))
@@ -63,26 +62,29 @@ class App extends Component {
 
     //agrega las carpetas
     addTask(e) {
-        fetch('api/folders', {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                M.toast({ html: 'Folder Save' })
-                this.setState({ title: '', description: '' })
-                this.fetchFolders()
+        if (this.state.title != '') {
+            fetch('api/folders', {
+                method: 'POST',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(err => console.error(err))
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    M.toast({ html: 'Folder Save' })
+                    this.setState({ title: '', description: '' })
+                    this.fetchFolders()
+                })
+                .catch(err => console.error(err))
 
-        e.preventDefault();
+            e.preventDefault();
 
-        document.getElementById("miForm").reset();
+            document.getElementById("miForm").reset();
+        }
+
     }
 
     //borra las carpetas
