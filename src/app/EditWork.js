@@ -110,20 +110,35 @@ class EditWork extends Component {
 
     }
 
-    //muestra o no el bloque para poder editar
-    handleVisible() {
-        if (this.state.visible === 'none') {
+    //saca el bloque de editar
+    handleVisibleCancel() {
+
+        if (this.state.visible === '') {
             console.log(this.state.visible)
             this.setState({
-                visible: ''
+                title: '',
+                _id: '',
+                visible: 'none',
+
             }, () => console.log(this.state.visible))
-        } else if (this.state.visible === '') {
+        }
+    }
+
+    //saca el bloque de editar despues de mandarlo
+    handleVisibleSend() {
+
+        if (this.state.visible === '') {
             console.log(this.state.visible)
             this.setState({
                 visible: 'none'
             }, () => console.log(this.state.visible))
         }
     }
+
+
+
+
+
 
     //cambia el estado para mostrar el componente App o el componente EditWork
     handleEstado() {
@@ -136,8 +151,8 @@ class EditWork extends Component {
 
     //agrego la tarea o la modifico
     addTask(event) {
-        console.log(this.props.folder)
-        if (this.state._id) {
+        console.log(event.target.name)
+        if (this.state._id && event.target.name != 'miForm') {
             fetch(`/api/tasks/${this.state._id}`, {
                 method: 'PUT',
                 body: JSON.stringify(this.state),
@@ -150,10 +165,10 @@ class EditWork extends Component {
                 .then(data => {
                     console.log(data);
                     M.toast({ html: 'Task Updated' })
-                    this.setState({ title: '', description: '', _id: '' })
+                    this.setState({ title: '', _id: '', visible: 'none' })
                     this.fetchTasks()
                 })
-        } else {
+        } else if (event.target.name == "miForm" && this.state._id == '') {
             fetch(`api/tasks/${this.props.folder}`, {
                 method: 'POST',
                 body: JSON.stringify(this.state),
@@ -166,7 +181,7 @@ class EditWork extends Component {
                 .then(data => {
                     console.log(data)
                     M.toast({ html: 'Task Save' })
-                    this.setState({ title: '', description: '' })
+                    this.setState({ title: '', _id: '', visible: 'none' })
                     this.fetchTasks()
                 })
                 .catch(err => console.error(err))
@@ -213,12 +228,17 @@ class EditWork extends Component {
             .then(data => {
                 console.log(data);
                 this.setState({
+                    description: data.description,
                     title: data.title,
-                    _id: data._id
+                    _id: data._id,
+                    visible: ''
+
                 })
                 console.log(this.state)
 
             })
+
+
     }
 
     render() {
@@ -256,7 +276,7 @@ class EditWork extends Component {
                                                             </td>
                                                             <td>
                                                                 <button className="btn light-blue darken-4" onClick={() => this.deleteTask(task._id)}><i className="material-icons">delete</i></button>
-                                                                <button className="btn light-blue darken-4" style={{ margin: '4px' }} onClick={() => { this.editTask(task._id); this.handleVisible() }}> <i className="material-icons">edit</i></button>
+                                                                <button className="btn light-blue darken-4" style={{ margin: '4px' }} onClick={() => { this.editTask(task._id) }}> <i className="material-icons">edit</i></button>
                                                             </td>
                                                         </tr>
                                                     )
@@ -265,7 +285,7 @@ class EditWork extends Component {
                                         </tbody>
                                     </table>
 
-                                    <form onSubmit={this.addTask} id="miForm" style={{ marginTop: '1em' }}>
+                                    <form onSubmit={this.addTask} id="miForm" name="miForm" style={{ marginTop: '1em' }}>
                                         <div className="row">
                                             <div className="input-field col s12">
                                                 <input name="title" type="text" placeholder="Add Task" onChange={this.handleChange} style={{ display: 'inline', width: 'auto' }} ></input>
@@ -290,8 +310,8 @@ class EditWork extends Component {
                                             </div>
                                         </div>
 
-                                        <button type="submit" className="btn light-blue darken-4" onClick={() => this.handleVisible()}>Send</button>
-                                        <button type="button" className="btn light-blue darken-4" onClick={() => this.handleVisible()} style={{ margin: '4px' }}>Cancel</button>
+                                        <button type="submit" className="btn light-blue darken-4" onClick={() => this.handleVisibleSend()}>Send</button>
+                                        <button type="button" className="btn light-blue darken-4" onClick={() => this.handleVisibleCancel()} style={{ margin: '4px' }}>Cancel</button>
                                     </form>
                                 </div>
                             </div>
