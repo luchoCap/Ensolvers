@@ -24,12 +24,14 @@ class App extends Component {
 
     componentDidMount() {
         this.fetchFolders()
+
     }
 
     //muestra el componente App o EditWork segun taskvisible, y si muestra EditWork actualizo el state
     cambiarEstado(data) {
         if (data) {
             this.setState({
+                title: '',
                 taskvisible: !this.state.taskvisible,
                 _id: data._id
             }, () => console.log(this.state))

@@ -186,6 +186,7 @@ class EditWork extends Component {
                 })
                 .catch(err => console.error(err))
         }
+
         document.getElementById("miForm").reset();
         event.preventDefault();
 
